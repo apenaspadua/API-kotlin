@@ -10,25 +10,26 @@ import com.treinamento.mdomingos.ceep.R
 import com.treinamento.mdomingos.ceep.model.Note
 import kotlinx.android.synthetic.main.note_item.view.*
 
-class NoteListAdapter(private val notes: List<Note>, private val context: Context) : Adapter<NoteListAdapter.ViewHolder>() {
+class NoteListAdapter(private val notes: List<Note>,
+                      private val context: Context) : Adapter<NoteListAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val note = notes[position]
+        holder?.let {
+            it.bindView(note)
+        }
+    }
 
-        val view = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false)
+    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.note_item, p0, false)
         return ViewHolder(view)
-
     }
 
     override fun getItemCount(): Int {
-      return notes.size
+        return notes.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-
-    }
-
-
-    class ViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindView(note: Note) {
             val title = itemView.note_item_title
@@ -37,7 +38,6 @@ class NoteListAdapter(private val notes: List<Note>, private val context: Contex
             title.text = note.title
             description.text = note.description
         }
-
 
     }
 
